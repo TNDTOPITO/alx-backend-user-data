@@ -14,8 +14,10 @@ class SessionAuth(Auth):
     def create_session(self, user_id: str = None) -> str:
         """
             Make a new Session and register in the class
+
             Args:
                 user_id: Identificator of the user_id
+
             Return:
                 Session ID
         """
@@ -30,8 +32,10 @@ class SessionAuth(Auth):
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """
             Make a user ID based in session id
+
             Args:
                 session_id: String of the session
+
             Return:
                 User ID
         """
@@ -46,8 +50,10 @@ class SessionAuth(Auth):
         """
             Take the session cookie and the user id
             and show the user
+
             Args:
                 request: Look the request
+
             Return:
                 User instance based in cooikie
         """
@@ -59,6 +65,7 @@ class SessionAuth(Auth):
 
     def destroy_session(self, request=None):
         """ Destroy the auth session if this
+
         Return:
             Destuction
         """

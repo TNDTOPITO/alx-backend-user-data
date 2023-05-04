@@ -12,8 +12,10 @@ class SessionDBAuth(SessionExpAuth):
     def create_session(self, user_id=None):
         """
             Make a new Session to Database
+
             Args:
                 user_id: Identificator of the user_id
+
             Return:
                 Session ID
         """
@@ -38,8 +40,10 @@ class SessionDBAuth(SessionExpAuth):
     def user_id_for_session_id(self, session_id=None):
         """
             Make user id to session
+
             Args:
                 session_id: String of the session
+
             Return:
                 User ID if not is expired
         """
@@ -67,6 +71,7 @@ class SessionDBAuth(SessionExpAuth):
 
     def destroy_session(self, request=None):
         """ Destroy the auth session if this
+
         Return:
             Destuction
         """

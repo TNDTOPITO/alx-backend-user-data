@@ -11,6 +11,7 @@ from typing import TypeVar, List
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
     """ Auth session Login
+
         Return:
             Sessioned with credentials
     """
@@ -44,6 +45,7 @@ def login():
                  methods=['DELETE'], strict_slashes=False)
 def logout():
     """ Logout of the session
+
         Return:
             Logout session
     """

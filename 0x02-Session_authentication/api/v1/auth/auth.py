@@ -12,6 +12,7 @@ class Auth:
     def __init__(self):
         """
             Constructor
+
             Args:
                 path: path to authenticate
                 excluded_paths: list of excluded path to authenticate
@@ -20,9 +21,11 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
             Require the auth
+
             Args:
                 path: path to authenticate
                 excluded_paths: list of excluded path to authenticate
+
             Return:
                 True if is authenticated otherwise false
         """
@@ -44,8 +47,10 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """
             Look the headers
+
             Args:
                 request: Look the autthorization
+
             Return:
                 The authorization header or None
         """
@@ -57,8 +62,10 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """
             Look current user
+
             Args:
                 request: Look the reques user
+
             Return:
                 The user
         """
@@ -67,8 +74,10 @@ class Auth:
     def session_cookie(self, request=None):
         """
             Cookie value
+
             Args:
                 request: Get the cookie session
+
             Return:
                 Cookie session
         """

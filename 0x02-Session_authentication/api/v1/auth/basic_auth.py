@@ -18,8 +18,10 @@ class BasicAuth(Auth):
                                             ) -> str:
         """
             Extract header in base64
+
             Args:
                 authorization_header: string in base64
+
             Return:
                 Header in base64 or None
         """
@@ -38,8 +40,10 @@ class BasicAuth(Auth):
                                             ) -> str:
         """
             Decode base64 header
+
             Args:
                 base64_authorization_header: Base64 header
+
             Return:
                 string header decoded or None
         """
@@ -60,8 +64,10 @@ class BasicAuth(Auth):
                                  ) -> (str, str):
         """
             Take user credentials
+
             Args:
                 decoded_base64_authorization_header: string
+
             Return:
                 tuple about user credentials (user_email, user_pwd)
                 or tuple (None, None)
@@ -81,9 +87,11 @@ class BasicAuth(Auth):
                                      ) -> TypeVar('User'):
         """
             Make or Get User from credentials
+
             Args:
                 user_email: Email from user
                 user_pwd: Currrent user
+
             Return:
                 User instance or None
         """
@@ -107,8 +115,10 @@ class BasicAuth(Auth):
     def current_user(self, request=None) -> TypeVar('User'):
         """
             Overload func to get the info of the user
+
             Args:
                 request: current user
+
             Return:
                 Info of the current user or users, otherwise None
         """
