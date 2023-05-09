@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
-"""
-Database module
-"""
+""" Create user, Find user, Update user """
 from sqlalchemy import create_engine
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
+from typing import TypeVar
 from user import Base, User
 
 
 class DB:
-    """ Model Data Base """
-
+    """ class """
     def __init__(self):
+        """ constructor """
         self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
@@ -21,77 +20,37 @@ class DB:
 
     @property
     def _session(self):
-        """ Make sessions """
+        """ create a session """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
-
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """
-            Make a new user
-
-            Args:
-                email: Text email
-                hashed_password: Password hashed
-
-            Return:
-                User created
-        """
-        new_user = User(email=email, hashed_password=hashed_password)
-        self._session.add(new_user)
+        """ save the user to the database and returns a User object """
+        user = User(email=email, hashed_password=hashed_password)
+        self._session.add(user)
         self._session.commit()
-
-        return new_user
+        return user
 
     def find_user_by(self, **kwargs) -> User:
-        """
-            Find user based in composition of your features
-
-            Args:
-                kwargs: Arbitrary dict with features
-
-            Return:
-                User found or error name
-        """
-        if not kwargs:
+        """ takes in arbitrary keyword arguments and returns the first row
+            found in the users table as filtered by the method’s input
+            arguments """
+        if kwargs is None:
             raise InvalidRequestError
-
-        cols_keys = User.__table__.columns.keys()
-        for key in kwargs.keys():
-            if key not in cols_keys:
-                raise InvalidRequestError
-
-        users = self._session.query(User).filter_by(**kwargs).first()
-
-        if users is None:
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if user is None:
             raise NoResultFound
-
-        return users
+        return user
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """
-            Update user in the database
-
-            Args:
-                user_id: Id to find and modify user
-                kwargs: Arbitrary dict with features
-
-            Return:
-                None
-        """
-        if not kwargs:
-            return None
-
-        user = self.find_user_by(id=user_id)
-
-        cols_keys = User.__table__.columns.keys()
-        for key in kwargs.keys():
-            if key not in cols_keys:
-                raise ValueError
-
+        """ locate the user to update, then will update the user’s attributes
+            as passed in the method’s arguments then commit changes to the
+            database """
+        _id = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
-            setattr(user, key, value)
-
+            if not hasattr(_id, key):
+                raise ValueError
+            setattr(_id, key, value)
         self._session.commit()
